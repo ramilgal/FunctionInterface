@@ -3,17 +3,17 @@ package Homework;
 import java.util.Objects;
 
 public class Numbers {
-    private int number;
+    private double number;
 
-    public Numbers(int number) {
+    public Numbers(double number) {
         this.number = number;
     }
 
-    public int getNumber() {
+    public double getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(double number) {
         this.number = number;
     }
 
