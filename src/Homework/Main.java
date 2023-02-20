@@ -1,12 +1,12 @@
 package Homework;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
+import java.util.function.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) {
@@ -87,5 +87,45 @@ public class Main {
         System.out.println("----------------------");
         Supplier<Integer> i = () -> new Random().nextInt(100);
         System.out.println(i.get());
+        System.out.println("----------------------");
+        System.out.println("----------------------");
+        System.out.println("----------------------");
+        System.out.println("----------Stream API и Optional------------");
+        System.out.println("----------Задание 1------------");
+        Stream<Integer> testStream = Stream.of(1,2,3,4,5,6,7,8,9);
+        BiConsumer<Integer, Integer> biConsumer = (min, max) -> System.out.println("Минимальное число: " +
+                min.toString() + ", максимальное число: " + max.toString());
+        Comparator<Integer> comparator = Comparator.comparing(Integer::intValue);
+        findMinMax(testStream, comparator, biConsumer);
+        System.out.println("----------Задание 2------------");
+        List<Integer> testNumbers = new ArrayList<>();
+        testNumbers.add(1);
+        testNumbers.add(2);
+        testNumbers.add(3);
+        testNumbers.add(4);
+        testNumbers.add(5);
+        testNumbers.add(6);
+        testNumbers.add(7);
+        testNumbers.add(8);
+        findNumberOfEvenNumbers(testNumbers);
+    }
+    //Метод в задании 1
+    public static <T> void findMinMax(Stream <? extends T> stream,Comparator<? super T> order,
+    BiConsumer<? super T, ? super T> minMaxConsumer) {
+List<T> testList = stream.collect(Collectors.toList());
+        if (testList.isEmpty()) {
+            minMaxConsumer.accept(null, null);
+        } else {
+            testList.sort(order);
+            minMaxConsumer.accept(testList.get(0), testList.get(testList.size()-1));
+        }
+    }
+    //Метод в задании 2
+    public static void findNumberOfEvenNumbers(List<Integer> list) {
+        Stream<Integer> stream = list.stream();
+        Predicate<Integer> predicate = i -> i % 2 == 0;
+        Stream<Integer> nextStream = stream.filter(predicate);
+        System.out.println("Количество четных чисел равно: " + nextStream.count());
+
     }
 }
